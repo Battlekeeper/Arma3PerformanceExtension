@@ -1,42 +1,22 @@
-_version = 1.6;
+if (player getVariable ["A3PE_Enabled", false]) then {
+player setVariable ["A3PE_Enabled", false, [2,clientOwner]];
 
-if ((missionNamespace getVariable ("A3PE"+(str (getPlayerUID player))) select 0)) then {
+systemChat "Performance Toggled OFF";
+[] spawn {sleep 0.5;{_x hideObject false;} forEach allUnits;{_x hideObject false;} forEach allDeadMen;};
 
-
-missionNamespace setVariable [("A3PE"+(str (getPlayerUID player))), [false,viewDistance,getPosASL curatorCamera,UAVControl (getConnectedUAV player),shownUAVFeed,(ForceRenderDistance),(_version),false,(HideWeapons),(ForceRenderDistancZeus)],true];
-systemChat "Performance Toggled Off";
-[] spawn {
-sleep 0.5;
-{
-_x hideObject false;
-} forEach allUnits;
-{
-_x hideObject false;
-} forEach allDeadMen;
-{
-_x hideObject false;
-} forEach allMissionObjects "GroundWeaponHolder";
-sleep 0.5;
-{
-_x hideObject false;
-} forEach allUnits;
-{
-_x hideObject false;
-} forEach allDeadMen;
-{
-_x hideObject false;
-} forEach allMissionObjects "GroundWeaponHolder";
-};
 
 } else {
-  systemChat "Performance Toggled On";
-  missionNamespace setVariable [("A3PE"+(str (getPlayerUID player))), [true,viewDistance,getPosASL curatorCamera,UAVControl (getConnectedUAV player),shownUAVFeed,(ForceRenderDistance),(_version),false,(HideWeapons),(ForceRenderDistancZeus)],true];
-  [_version] spawn {
-    params ["_version"];
-  while {(missionNamespace getVariable [("A3PE"+(str (getPlayerUID player))), false]) select 0} do {
-    sleep 0.5;
-    _var = (missionNamespace getVariable [("A3PE"+(str (getPlayerUID player))), false]) select 0;
-    missionNamespace setVariable [("A3PE"+(str (getPlayerUID player))), [_var,viewDistance,getPosASL curatorCamera,UAVControl (getConnectedUAV player),shownUAVFeed,(ForceRenderDistance),(_version),false,(HideWeapons),(ForceRenderDistancZeus)],true];
-  };
-};
-};
+player setVariable ["A3PE_Enabled", true, [2,clientOwner]];
+systemChat "Performance Toggled ON";
+
+[] spawn {
+while {player getVariable ["A3PE_Enabled", false]} do {
+sleep 1;
+player setVariable ["A3PE_ViewDistance", viewDistance, [2,clientOwner]];
+player setVariable ["A3PE_ZeusCameraPos", (getPosASL curatorCamera), [2,clientOwner]];
+player setVariable ["A3PE_IsConnectedUav", UAVControl (getConnectedUAV player), [2,clientOwner]];
+player setVariable ["A3PE_ShownUAVFeed", shownUAVFeed, [2,clientOwner]];
+player setVariable ["A3PE_ForceRenderDistance", ForceRenderDistance, [2,clientOwner]];
+}; // while Loop
+}; // Spawn
+}; // If Statement
