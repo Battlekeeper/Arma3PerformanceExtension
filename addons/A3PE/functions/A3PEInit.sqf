@@ -15,28 +15,11 @@ player setVariable ["A3PE_ForceRenderDistance", ForceRenderDistance, [2,clientOw
 player setVariable ["A3PE_PlayerVersion", _version, [2,clientOwner]];
 };
 
-//change to is dedicated later
-if (isDedicated) then {
-[] spawn {
-ServerVersion = 1.7;
-while {true} do {
-{
-_PlayerVersion = _x getVariable ["A3PE_PlayerVersion", 1];
-_PlayerEnabled = _x getVariable ["A3PE_Enabled", false];
-if (_PlayerEnabled == true && {_PlayerVersion == ServerVersion}) then {
-[_x] call A3PE_fnc_hide;
-};
-} forEach allPlayers;
-}; // onEachFrame
-};
-}; // isServer
 
-
-/*  THIS CODE IS 2x SLOWER
 //change to is dedicated later
 if (isServer) then {
 ServerVersion = 1.7;
-onEachFrame {
+addMissionEventHandler ["EachFrame", {
 {
 _PlayerVersion = _x getVariable ["A3PE_PlayerVersion", 1];
 _PlayerEnabled = _x getVariable ["A3PE_Enabled", false];
@@ -44,5 +27,5 @@ if (_PlayerEnabled == true && {_PlayerVersion == ServerVersion}) then {
 [_x] call A3PE_fnc_hide;
 };
 } forEach allPlayers;
-}; // onEachFrame
-}; // isServer
+}]; // onEachFrame
+};  // isServer

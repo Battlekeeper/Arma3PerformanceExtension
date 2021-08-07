@@ -1,5 +1,4 @@
 params ["_player"];
-hint str _player;
 _ViewDistance = _player getVariable ["A3PE_ViewDistance", 3000];
 _ZeusCameraPos = _player getVariable ["A3PE_ZeusCameraPos", [0,0,0]];
 _IsConnectedUav = _player getVariable ["A3PE_IsConnectedUav", [objNull, ""]];
