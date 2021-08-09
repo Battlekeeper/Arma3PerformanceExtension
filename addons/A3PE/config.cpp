@@ -1,11 +1,15 @@
 class CfgPatches {
-	class PiR {
+	class A3PE {
 		weapons[]={};
-		requiredVersion=2.02;
-		requiredAddons[]={};
+		requiredAddons[]={"cba_main"};
 		author="Battlekeeper";
 		authorUrl="";
 		units[]={};
+		class MyMod_main {
+				version = 1.8;
+				versionStr = "1.8.0";
+				versionAr[] = {1, 8, 0};
+    	};
 	};
 };
 class CfgFunctions {
@@ -14,8 +18,8 @@ class CfgFunctions {
 		class Misc {
 			file="\A3PE\Functions";
 			class toggle {};
-			class loop {};
-			class hide {};
+			class hideClient {};
+			class hideServer {};
 		};
 	};
 };
@@ -23,8 +27,4 @@ class Extended_PostInit_EventHandlers {
 	class A3PEInit_functions_f {
 		init="nul = [] execVM 'A3PE\functions\A3PEInit.sqf'";
 	};
-};
-class cfgMods {
-	author="Battlekeeper";
-	timepacked="1628082446";
 };

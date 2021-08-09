@@ -1,3 +1,3 @@
 name = "Arma 3 Performance Extension";
-description = "Improves FPS is multiplayer missions";
+description = "Improves FPS in multiplayer missions";
 author = "Battlekeeper";
