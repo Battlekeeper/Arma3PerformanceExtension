@@ -26,6 +26,7 @@ if (player getVariable ["A3PE_Enabled", false]) then {
       player setVariable ["A3PE_HigherQualityAI", HigherQualityAI, [2,clientOwner]];
       player setVariable ["A3PE_HigherQualityDead", HigherQualityDead, [2,clientOwner]];
       player setVariable ["A3PE_EnablePlayerHide", EnablePlayerHide, [2,clientOwner]];
+      player setVariable ["A3PE_HigherQualityPlayer", HigherQualityPlayer, [2,clientOwner]];
     }; // While Loop
   }; // Spawn
 }; // If Statement

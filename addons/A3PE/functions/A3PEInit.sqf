@@ -4,8 +4,9 @@
 ["EnablePlayerHide","CHECKBOX",["Enable the Hiding of players","Enable the Hiding of players"],["Arma 3 Performance Settings","Arma 3 Performance Settings"],false,0,{},false] call CBA_fnc_addSetting;
 
 
-["HigherQualityAI","CHECKBOX",["Enable Lower Latency For AI","Enables extra calculations to decrease latency when turning a corner, can decrease server FPS"],["Arma 3 Performance Settings","Quality Settings - May Affect Server FPS"],false,1,{},false] call CBA_fnc_addSetting;
-["HigherQualityDead","CHECKBOX",["Enable Lower Latency For Dead Bodies","Enables extra calculations to decrease latency when turning a corner, can decrease server FPS"],["Arma 3 Performance Settings","Quality Settings - May Affect Server FPS"],false,1,{},false] call CBA_fnc_addSetting;
+["HigherQualityAI","CHECKBOX",["Enable Lower Latency For AI","Enables extra calculations to decrease latency when turning a corner, can decrease server FPS"],["Arma 3 Performance Settings","Higher Quality Settings - May Affect Server FPS"],false,1,{},false] call CBA_fnc_addSetting;
+["HigherQualityDead","CHECKBOX",["Enable Lower Latency For Dead Bodies","Enables extra calculations to decrease latency when turning a corner, can decrease server FPS"],["Arma 3 Performance Settings","Higher Quality Settings - May Affect Server FPS"],false,1,{},false] call CBA_fnc_addSetting;
+["HigherQualityPlayer","CHECKBOX",["Enable Lower Latency For players","Enables extra calculations to decrease latency when turning a corner, can decrease server FPS"],["Arma 3 Performance Settings","Higher Quality Settings - May Affect Server FPS"],false,1,{},false] call CBA_fnc_addSetting;
 
 if (!isDedicated) then {
 
@@ -18,6 +19,7 @@ if (!isDedicated) then {
   player setVariable ["A3PE_ForceRenderDistance", ForceRenderDistance, [2,clientOwner]];
   player setVariable ["A3PE_HigherQualityAI", HigherQualityAI, [2,clientOwner]];
   player setVariable ["A3PE_HigherQualityDead", HigherQualityDead, [2,clientOwner]];
+  player setVariable ["A3PE_HigherQualityPlayer", HigherQualityPlayer, [2,clientOwner]];
   player setVariable ["A3PE_EnablePlayerHide", EnablePlayerHide, [2,clientOwner]];
 };
 

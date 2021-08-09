@@ -8,6 +8,7 @@ _ForceRenderDistanceZeus = _player getVariable ["A3PE_ForceRenderDistanceZeus", 
 _HigherQualityAI = _player getVariable ["A3PE_HigherQualityAI", false];
 _HigherQualityDead = _player getVariable ["A3PE_HigherQualityDead", false];
 _EnablePlayerHide = _player getVariable ["A3PE_EnablePlayerHide", false];
+_HigherQualityPlayer = _player getVariable ["A3PE_HigherQualityPlayer", false];
 _UAV = getConnectedUAV _player;
 
 _allObjsHide = [];
@@ -137,7 +138,7 @@ if (_EnablePlayerHide) then {
                       _visnum = [_UAV, "VIEW", _CheckedUnit] checkVisibility [getPosASL _UAV, AGLToASL _pos2];
                       _vis = _vis + _visnum;
                     };
-                    if (_HigherQualityAI) then {
+                    if (_HigherQualityPlayer) then {
                       _visnumFront = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [0,5,1]), AGLToASL _pos2];  // front
                       _visnumLeft = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [-5,0,1]), AGLToASL _pos2];  // left
                       _visnumRight = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [5,0,1]), AGLToASL _pos2];  // right
