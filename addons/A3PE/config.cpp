@@ -7,8 +7,8 @@ class CfgPatches {
 		units[]={};
 		class MyMod_main {
 				version = 1.8;
-				versionStr = "1.8.0";
-				versionAr[] = {1, 8, 0};
+				versionStr = "1.8.1";
+				versionAr[] = {1, 8, 1};
     	};
 	};
 };
