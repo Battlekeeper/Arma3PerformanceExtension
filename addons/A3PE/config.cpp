@@ -5,10 +5,10 @@ class CfgPatches {
 		author="Battlekeeper";
 		authorUrl="";
 		units[]={};
-		class MyMod_main {
-				version = 1.8;
-				versionStr = "1.8.1";
-				versionAr[] = {1, 8, 1};
+		class A3PE_main {
+				version = 1.9;
+				versionStr = "1.9.0";
+				versionAr[] = {1, 9, 0};
     	};
 	};
 };
