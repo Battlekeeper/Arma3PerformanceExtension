@@ -11,6 +11,12 @@ if (player getVariable ["A3PE_Enabled", false]) then {
       {
         _x hideObject false;
       } forEach allDeadMen;
+      {
+        _x hideObject false;
+      } forEach allPlayers;
+      {
+        _x hideObject false;
+      } forEach vehicles;
     };
 } else {
   _HCNetworkID = missionNamespace getVariable ["A3PE_HCNetworkID", clientOwner];
@@ -30,6 +36,9 @@ if (player getVariable ["A3PE_Enabled", false]) then {
       player setVariable ["A3PE_HigherQualityDead", HigherQualityDead, [2,clientOwner,_HCNetworkID]];
       player setVariable ["A3PE_EnablePlayerHide", EnablePlayerHide, [2,clientOwner,_HCNetworkID]];
       player setVariable ["A3PE_HigherQualityPlayer", HigherQualityPlayer, [2,clientOwner,_HCNetworkID]];
+      player setVariable ["A3PE_EnableVehicleHide", EnableVehicleHide, [2,clientOwner,_HCNetworkID]];
+      player setVariable ["A3PE_EnableDeadHide", EnableDeadHide, [2,clientOwner,_HCNetworkID]];
+      player setVariable ["A3PE_EnableAIHide", EnableAIHide, [2,clientOwner,_HCNetworkID]];
     }; // While Loop
   }; // Spawn
 }; // If Statement
