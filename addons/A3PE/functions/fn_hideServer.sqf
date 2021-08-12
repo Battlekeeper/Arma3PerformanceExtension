@@ -9,6 +9,7 @@ _HigherQualityAI = _player getVariable ["A3PE_HigherQualityAI", false];
 _HigherQualityDead = _player getVariable ["A3PE_HigherQualityDead", false];
 _EnablePlayerHide = _player getVariable ["A3PE_EnablePlayerHide", false];
 _HigherQualityPlayer = _player getVariable ["A3PE_HigherQualityPlayer", false];
+_HigherQualityVehicles = _player getVariable ["HigherQualityVehicles", false];
 _EnableVehicleHide = _player getVariable ["A3PE_EnableVehicleHide", false];
 _EnableDeadHide = _player getVariable ["A3PE_EnableDeadHide", true];
 _EnableAIHide = _player getVariable ["A3PE_EnableAIHide", true];
@@ -196,7 +197,7 @@ if (!isPlayer _CheckedUnit) then {
                     _visnum = [_UAV, "VIEW", _CheckedUnit] checkVisibility [getPosASL _UAV, AGLToASL _pos2];
                     _vis = _vis + _visnum;
                   };
-                  if (_HigherQualityDead) then {
+                  if (_HigherQualityVehicles) then {
                     _visnumFront = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [0,5,1]), AGLToASL _pos2];  // front
                     _visnumLeft = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [-5,0,1]), AGLToASL _pos2];  // left
                     _visnumRight = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [5,0,1]), AGLToASL _pos2];  // right

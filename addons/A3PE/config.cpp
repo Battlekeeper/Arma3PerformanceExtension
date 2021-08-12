@@ -7,8 +7,8 @@ class CfgPatches {
 		units[]={};
 		class A3PE_main {
 				version = 1.9;
-				versionStr = "1.9.1";
-				versionAr[] = {1, 9, 1};
+				versionStr = "1.9.2";
+				versionAr[] = {1, 9, 2};
     	};
 	};
 };

@@ -36,6 +36,7 @@ if (player getVariable ["A3PE_Enabled", false]) then {
       player setVariable ["A3PE_HigherQualityDead", HigherQualityDead, [2,clientOwner,_HCNetworkID]];
       player setVariable ["A3PE_EnablePlayerHide", EnablePlayerHide, [2,clientOwner,_HCNetworkID]];
       player setVariable ["A3PE_HigherQualityPlayer", HigherQualityPlayer, [2,clientOwner,_HCNetworkID]];
+      player setVariable ["A3PE_HigherQualityVehicles", HigherQualityVehicles, [2,clientOwner,_HCNetworkID]];
       player setVariable ["A3PE_EnableVehicleHide", EnableVehicleHide, [2,clientOwner,_HCNetworkID]];
       player setVariable ["A3PE_EnableDeadHide", EnableDeadHide, [2,clientOwner,_HCNetworkID]];
       player setVariable ["A3PE_EnableAIHide", EnableAIHide, [2,clientOwner,_HCNetworkID]];

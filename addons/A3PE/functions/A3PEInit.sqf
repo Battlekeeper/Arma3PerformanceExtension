@@ -10,7 +10,9 @@
 
 ["HigherQualityAI","CHECKBOX",["Enable Lower Latency For AI","Enables extra calculations to decrease latency when turning a corner, can decrease server FPS"],["Arma 3 Performance Settings","Higher Quality Settings - May Affect Server FPS"],false,1,{},false] call CBA_fnc_addSetting;
 ["HigherQualityDead","CHECKBOX",["Enable Lower Latency For Dead Bodies","Enables extra calculations to decrease latency when turning a corner, can decrease server FPS"],["Arma 3 Performance Settings","Higher Quality Settings - May Affect Server FPS"],false,1,{},false] call CBA_fnc_addSetting;
-["HigherQualityPlayer","CHECKBOX",["Enable Lower Latency For players","Enables extra calculations to decrease latency when turning a corner, can decrease server FPS"],["Arma 3 Performance Settings","Higher Quality Settings - May Affect Server FPS"],false,1,{},false] call CBA_fnc_addSetting;
+["HigherQualityPlayer","CHECKBOX",["Enable Lower Latency For Players","Enables extra calculations to decrease latency when turning a corner, can decrease server FPS"],["Arma 3 Performance Settings","Higher Quality Settings - May Affect Server FPS"],false,1,{},false] call CBA_fnc_addSetting;
+["HigherQualityVehicles","CHECKBOX",["Enable Lower Latency For Vehicles","Enables extra calculations to decrease latency when turning a corner, can decrease server FPS"],["Arma 3 Performance Settings","Higher Quality Settings - May Affect Server FPS"],false,1,{},false] call CBA_fnc_addSetting;
+
 
 if (!isDedicated && hasInterface) then {
   ["Toggle Performance Enhance", "Toggle_Performance", "Toggle Performance Enhance", {_this call A3PE_fnc_toggle}, {}, [DIK_U, [false, false, false]],false,0,true] call cba_fnc_addKeybind;
@@ -24,6 +26,7 @@ if (!isDedicated && hasInterface) then {
   player setVariable ["A3PE_HigherQualityAI", HigherQualityAI, [2,clientOwner,_HCNetworkID]];
   player setVariable ["A3PE_HigherQualityDead", HigherQualityDead, [2,clientOwner,_HCNetworkID]];
   player setVariable ["A3PE_HigherQualityPlayer", HigherQualityPlayer, [2,clientOwner,_HCNetworkID]];
+  player setVariable ["A3PE_HigherQualityVehicles", HigherQualityVehicles, [2,clientOwner,_HCNetworkID]];
   player setVariable ["A3PE_EnablePlayerHide", EnablePlayerHide, [2,clientOwner,_HCNetworkID]];
   player setVariable ["A3PE_EnableVehicleHide", EnableVehicleHide, [2,clientOwner,_HCNetworkID]];
   player setVariable ["A3PE_EnableDeadHide", EnableDeadHide, [2,clientOwner,_HCNetworkID]];
