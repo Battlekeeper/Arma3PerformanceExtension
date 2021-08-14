@@ -14,6 +14,7 @@ _EnableVehicleHide = _player getVariable ["A3PE_EnableVehicleHide", false];
 _EnableDeadHide = _player getVariable ["A3PE_EnableDeadHide", true];
 _EnableAIHide = _player getVariable ["A3PE_EnableAIHide", true];
 _UAV = getConnectedUAV _player;
+_eyePosPlayer = eyePos _player;
 
 _allObjsHide = [];
 _allObjsShow = [];
@@ -21,38 +22,37 @@ if (_EnableAIHide) then {
 {
   _CheckedUnit = _x;
   _vis = 0;
-  _selections = ["rightleg","leftleg","rightarm","leftarm","head"];
+  _selections = ["leftarm","rightarm","head","leftleg","rightleg"];
 
   if (!isPlayer _CheckedUnit) then {
     if (_ViewDistance > _player distance2D _CheckedUnit) then {
       if (_player distance2D _CheckedUnit > _ForceRenderDistance) then {
         if (isNull objectParent _CheckedUnit) then {
               {
-                if (_vis == 0) then { // Skips if unit was already calculated to be seen
                   _pos = _CheckedUnit selectionPosition _x;
-                  _pos2 = _CheckedUnit modelToWorld _pos;
+                  _pos2 = _CheckedUnit modelToWorldWorld _pos;
                     if (isNull objectParent _player) then {
-                      _visnum = [_player, "VIEW", _CheckedUnit] checkVisibility [eyePos _player, AGLToASL _pos2];
+                      _visnum = [_player, "VIEW", _CheckedUnit] checkVisibility [_eyePosPlayer, _pos2];
                       _vis = _vis + _visnum;
                     } else {
-                      _visnum = [(vehicle _player), "VIEW", _CheckedUnit] checkVisibility [eyePos _player, AGLToASL _pos2];
+                      _visnum = [(vehicle _player), "VIEW", _CheckedUnit] checkVisibility [_eyePosPlayer, _pos2];
                       _vis = _vis + _visnum;
                     };
                     if !(_ZeusCameraPos isEqualTo [0,0,0]) then {
-                      _visnum = [objNull, "VIEW", _CheckedUnit] checkVisibility [_ZeusCameraPos, AGLToASL _pos2];
+                      _visnum = [objNull, "VIEW", _CheckedUnit] checkVisibility [_ZeusCameraPos, _pos2];
                       _vis = _vis + _visnum;
                     };
                     if (_IsConnectedUav select 1 != "" || _ShownUAVFeed) then {
-                      _visnum = [_UAV, "VIEW", _CheckedUnit] checkVisibility [getPosASL _UAV, AGLToASL _pos2];
+                      _visnum = [_UAV, "VIEW", _CheckedUnit] checkVisibility [getPosASL _UAV, _pos2];
                       _vis = _vis + _visnum;
                     };
                     if (_HigherQualityAI) then {
-                      _visnumFront = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [0,5,1]), AGLToASL _pos2];  // front
-                      _visnumLeft = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [-5,0,1]), AGLToASL _pos2];  // left
-                      _visnumRight = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [5,0,1]), AGLToASL _pos2];  // right
+                      _visnumFront = [_player, "VIEW", _CheckedUnit] checkVisibility [_player modelToWorldWorld [0,5,1], _pos2];  // front
+                      _visnumLeft = [_player, "VIEW", _CheckedUnit] checkVisibility [_player modelToWorldWorld [-5,0,1], _pos2];  // left
+                      _visnumRight = [_player, "VIEW", _CheckedUnit] checkVisibility [_player modelToWorldWorld [5,0,1], _pos2];  // right
                       _vis = _vis + _visnumFront + _visnumLeft + _visnumRight;
                     };
-                };
+                if (_vis != 0) exitWith {_vis}; //Exit loop if unit was seen
               } forEach _selections;
 
               if (_vis == 0) then {
@@ -71,39 +71,38 @@ if (_EnableDeadHide) then {
 {
   _CheckedUnit = _x;
   _vis = 0;
-  _selections = ["rightleg","leftleg","rightarm","leftarm","head"];
+  _selections = ["leftarm","rightarm","head","leftleg","rightleg"];
 
 if (!isPlayer _CheckedUnit) then {
   if (_ViewDistance > _player distance2D _CheckedUnit) then {
     if (_player distance2D _CheckedUnit > _ForceRenderDistance) then {
       if (isNull objectParent _CheckedUnit) then {
-          _visnum = [_player, "VIEW", _CheckedUnit] checkVisibility [eyePos _player, AGLToASL (_CheckedUnit modelToWorld [0,0,0.5])];
+          _visnum = [_player, "VIEW", _CheckedUnit] checkVisibility [_eyePosPlayer, _CheckedUnit modelToWorldWorld [0,0,0.5]];
             {
-              if (_vis == 0) then { // Skips if unit was already calculated to be seen
                 _pos = _CheckedUnit selectionPosition _x;
-                _pos2 = _CheckedUnit modelToWorld _pos;
+                _pos2 = _CheckedUnit modelToWorldWorld _pos;
                   if (isNull objectParent _player) then {
-                    _visnum = [_player, "VIEW", _CheckedUnit] checkVisibility [eyePos _player, AGLToASL _pos2];
+                    _visnum = [_player, "VIEW", _CheckedUnit] checkVisibility [_eyePosPlayer, _pos2];
                     _vis = _vis + _visnum;
                   } else {
-                    _visnum = [(vehicle _player), "VIEW", _CheckedUnit] checkVisibility [eyePos _player, AGLToASL _pos2];
+                    _visnum = [(vehicle _player), "VIEW", _CheckedUnit] checkVisibility [_eyePosPlayer, _pos2];
                     _vis = _vis + _visnum;
                   };
                   if !(_ZeusCameraPos isEqualTo [0,0,0]) then {
-                    _visnum = [objNull, "VIEW", _CheckedUnit] checkVisibility [_ZeusCameraPos, AGLToASL _pos2];
+                    _visnum = [objNull, "VIEW", _CheckedUnit] checkVisibility [_ZeusCameraPos, _pos2];
                     _vis = _vis + _visnum;
                   };
                   if (_IsConnectedUav select 1 != "" || _ShownUAVFeed) then {
-                    _visnum = [_UAV, "VIEW", _CheckedUnit] checkVisibility [getPosASL _UAV, AGLToASL _pos2];
+                    _visnum = [_UAV, "VIEW", _CheckedUnit] checkVisibility [getPosASL _UAV, _pos2];
                     _vis = _vis + _visnum;
                   };
                   if (_HigherQualityDead) then {
-                    _visnumFront = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [0,5,1]), AGLToASL _pos2];  // front
-                    _visnumLeft = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [-5,0,1]), AGLToASL _pos2];  // left
-                    _visnumRight = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [5,0,1]), AGLToASL _pos2];  // right
+                    _visnumFront = [_player, "VIEW", _CheckedUnit] checkVisibility [_player modelToWorldWorld [0,5,1], _pos2];  // front
+                    _visnumLeft = [_player, "VIEW", _CheckedUnit] checkVisibility [_player modelToWorldWorld [-5,0,1], _pos2];  // left
+                    _visnumRight = [_player, "VIEW", _CheckedUnit] checkVisibility [_player modelToWorldWorld [5,0,1], _pos2];  // right
                     _vis = _vis + _visnumFront + _visnumLeft + _visnumRight;
                   };
-              };
+              if (_vis != 0) exitWith {_vis}; //Exit loop if unit was seen
             } forEach _selections;
 
             if (_vis == 0) then {
@@ -123,37 +122,36 @@ if (_EnablePlayerHide) then {
 {
   _CheckedUnit = _x;
   _vis = 0;
-  _selections = ["rightleg","leftleg","rightarm","leftarm","head"];
+  _selections = ["leftarm","rightarm","head","leftleg","rightleg"];
 
     if (_ViewDistance > _player distance2D _CheckedUnit) then {
       if (_player distance2D _CheckedUnit > _ForceRenderDistance) then {
         if (isNull objectParent _CheckedUnit) then {
               {
-                if (_vis == 0) then { // Skips if unit was already calculated to be seen
                   _pos = _CheckedUnit selectionPosition _x;
-                  _pos2 = _CheckedUnit modelToWorld _pos;
+                  _pos2 = _CheckedUnit modelToWorldWorld _pos;
                     if (isNull objectParent _player) then {
-                      _visnum = [_player, "VIEW", _CheckedUnit] checkVisibility [eyePos _player, AGLToASL _pos2];
+                      _visnum = [_player, "VIEW", _CheckedUnit] checkVisibility [_eyePosPlayer, _pos2];
                       _vis = _vis + _visnum;
                     } else {
-                      _visnum = [(vehicle _player), "VIEW", _CheckedUnit] checkVisibility [eyePos _player, AGLToASL _pos2];
+                      _visnum = [(vehicle _player), "VIEW", _CheckedUnit] checkVisibility [_eyePosPlayer, _pos2];
                       _vis = _vis + _visnum;
                     };
                     if !(_ZeusCameraPos isEqualTo [0,0,0]) then {
-                      _visnum = [objNull, "VIEW", _CheckedUnit] checkVisibility [_ZeusCameraPos, AGLToASL _pos2];
+                      _visnum = [objNull, "VIEW", _CheckedUnit] checkVisibility [_ZeusCameraPos, _pos2];
                       _vis = _vis + _visnum;
                     };
                     if (_IsConnectedUav select 1 != "" || _ShownUAVFeed) then {
-                      _visnum = [_UAV, "VIEW", _CheckedUnit] checkVisibility [getPosASL _UAV, AGLToASL _pos2];
+                      _visnum = [_UAV, "VIEW", _CheckedUnit] checkVisibility [getPosASL _UAV, _pos2];
                       _vis = _vis + _visnum;
                     };
                     if (_HigherQualityPlayer) then {
-                      _visnumFront = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [0,5,1]), AGLToASL _pos2];  // front
-                      _visnumLeft = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [-5,0,1]), AGLToASL _pos2];  // left
-                      _visnumRight = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [5,0,1]), AGLToASL _pos2];  // right
+                      _visnumFront = [_player, "VIEW", _CheckedUnit] checkVisibility [_player modelToWorldWorld [0,5,1], _pos2];  // front
+                      _visnumLeft = [_player, "VIEW", _CheckedUnit] checkVisibility [_player modelToWorldWorld [-5,0,1], _pos2];  // left
+                      _visnumRight = [_player, "VIEW", _CheckedUnit] checkVisibility [_player modelToWorldWorld [5,0,1], _pos2];  // right
                       _vis = _vis + _visnumFront + _visnumLeft + _visnumRight;
                     };
-                };
+                if (_vis != 0) exitWith {_vis}; //Exit loop if unit was seen
               } forEach _selections;
 
               if (_vis == 0) then {
@@ -177,33 +175,32 @@ if (!isPlayer _CheckedUnit) then {
   if (_ViewDistance > _player distance2D _CheckedUnit) then {
     if (_player distance2D _CheckedUnit > _ForceRenderDistance) then {
       if (isNull objectParent _CheckedUnit) then {
-          _visnum = [_player, "VIEW", _CheckedUnit] checkVisibility [eyePos _player, AGLToASL (_CheckedUnit modelToWorld [0,0,0.5])];
+          _visnum = [_player, "VIEW", _CheckedUnit] checkVisibility [_eyePosPlayer, _CheckedUnit modelToWorldWorld [0,0,0.5]];
             {
-              if (_vis == 0) then { // Skips if unit was already calculated to be seen
                 _pos = _CheckedUnit selectionPosition _x;
-                _pos2 = _CheckedUnit modelToWorld _pos;
+                _pos2 = _CheckedUnit modelToWorldWorld _pos;
                   if (isNull objectParent _player) then {
-                    _visnum = [_player, "VIEW", _CheckedUnit] checkVisibility [eyePos _player, AGLToASL _pos2];
+                    _visnum = [_player, "VIEW", _CheckedUnit] checkVisibility [_eyePosPlayer, _pos2];
                     _vis = _vis + _visnum;
                   } else {
-                    _visnum = [(vehicle _player), "VIEW", _CheckedUnit] checkVisibility [eyePos _player, AGLToASL _pos2];
+                    _visnum = [(vehicle _player), "VIEW", _CheckedUnit] checkVisibility [_eyePosPlayer, _pos2];
                     _vis = _vis + _visnum;
                   };
                   if !(_ZeusCameraPos isEqualTo [0,0,0]) then {
-                    _visnum = [objNull, "VIEW", _CheckedUnit] checkVisibility [_ZeusCameraPos, AGLToASL _pos2];
+                    _visnum = [objNull, "VIEW", _CheckedUnit] checkVisibility [_ZeusCameraPos, _pos2];
                     _vis = _vis + _visnum;
                   };
                   if (_IsConnectedUav select 1 != "" || _ShownUAVFeed) then {
-                    _visnum = [_UAV, "VIEW", _CheckedUnit] checkVisibility [getPosASL _UAV, AGLToASL _pos2];
+                    _visnum = [_UAV, "VIEW", _CheckedUnit] checkVisibility [getPosASL _UAV, _pos2];
                     _vis = _vis + _visnum;
                   };
                   if (_HigherQualityVehicles) then {
-                    _visnumFront = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [0,5,1]), AGLToASL _pos2];  // front
-                    _visnumLeft = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [-5,0,1]), AGLToASL _pos2];  // left
-                    _visnumRight = [_player, "VIEW", _CheckedUnit] checkVisibility [AGLToASL (_player modelToWorld [5,0,1]), AGLToASL _pos2];  // right
+                    _visnumFront = [_player, "VIEW", _CheckedUnit] checkVisibility [_player modelToWorldWorld [0,5,1], _pos2];  // front
+                    _visnumLeft = [_player, "VIEW", _CheckedUnit] checkVisibility [_player modelToWorldWorld [-5,0,1], _pos2];  // left
+                    _visnumRight = [_player, "VIEW", _CheckedUnit] checkVisibility [_player modelToWorldWorld [5,0,1], _pos2];  // right
                     _vis = _vis + _visnumFront + _visnumLeft + _visnumRight;
                   };
-              };
+              if (_vis != 0) exitWith {_vis}; //Exit loop if unit was seen
             } forEach _selections;
 
             if (_vis == 0) then {
