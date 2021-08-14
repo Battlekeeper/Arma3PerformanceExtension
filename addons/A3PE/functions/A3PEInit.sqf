@@ -1,5 +1,6 @@
 #include "\a3\ui_f\hpp\definedikcodes.inc"
 
+["ToggledOnDefault","CHECKBOX",["Mod is Toggled on by Default","Mod is Toggled on by Default"],["Arma 3 Performance Settings","Arma 3 Performance Settings"],false,0,{},true] call CBA_fnc_addSetting;
 ["ForceRenderDistance","SLIDER",["Force Render Range in Meters","Range at which units are force rendered, units in this range will be rendered even if you cannot see them."],["Arma 3 Performance Settings","Arma 3 Performance Settings"],[0, 500, 10, 0],0,{},false] call CBA_fnc_addSetting;
 ["EnableAIHide","CHECKBOX",["Enable The Hiding of AI","Enable the Hiding of AI"],["Arma 3 Performance Settings","Arma 3 Performance Settings"],true,0,{},false] call CBA_fnc_addSetting;
 ["EnableDeadHide","CHECKBOX",["Enable The Hiding of Dead Bodies","Enable the Hiding of Dead Bodies"],["Arma 3 Performance Settings","Arma 3 Performance Settings"],true,0,{},false] call CBA_fnc_addSetting;
@@ -15,9 +16,13 @@
 
 
 if (!isDedicated && hasInterface) then {
-  ["Toggle Performance Enhance", "Toggle_Performance", "Toggle Performance Enhance", {_this call A3PE_fnc_toggle}, {}, [DIK_U, [false, false, false]],false,0,true] call cba_fnc_addKeybind;
   _HCNetworkID = missionNamespace getVariable ["A3PE_HCNetworkID", clientOwner];
-  player setVariable ["A3PE_Enabled", false, [2,clientOwner,_HCNetworkID]];
+  ["Toggle Performance Enhance", "Toggle_Performance", "Toggle Performance Enhance", {_this call A3PE_fnc_toggle}, {}, [DIK_U, [false, false, false]],false,0,true] call cba_fnc_addKeybind;
+  if (ToggledOnDefault) then {
+    player setVariable ["A3PE_Enabled", true, [2,clientOwner,_HCNetworkID]];
+  } else {
+    player setVariable ["A3PE_Enabled", false, [2,clientOwner,_HCNetworkID]];
+  };
   player setVariable ["A3PE_ViewDistance", viewDistance, [2,clientOwner,_HCNetworkID]];
   player setVariable ["A3PE_ZeusCameraPos", (getPosASL curatorCamera), [2,clientOwner,_HCNetworkID]];
   player setVariable ["A3PE_IsConnectedUav", UAVControl (getConnectedUAV player), [2,clientOwner,_HCNetworkID]];
